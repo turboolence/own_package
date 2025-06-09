@@ -1,6 +1,23 @@
 import sys
 import os
 import numpy as np
+import types
+
+cmasher_stub = types.SimpleNamespace(bubblegum=None)
+sys.modules['cmasher'] = cmasher_stub
+matplotlib_stub = types.ModuleType('matplotlib')
+matplotlib_stub.rcParams = {'lines.color': 'k'}
+transforms_stub = types.ModuleType('matplotlib.transforms')
+pyplot_stub = types.ModuleType('matplotlib.pyplot')
+matplotlib_stub.pyplot = pyplot_stub
+matplotlib_stub.transforms = transforms_stub
+sys.modules['matplotlib'] = matplotlib_stub
+sys.modules['matplotlib.pyplot'] = pyplot_stub
+sys.modules['matplotlib.transforms'] = transforms_stub
+sys.modules.setdefault('mpl_toolkits', types.ModuleType('mpl_toolkits'))
+axes_grid1_stub = types.ModuleType('mpl_toolkits.axes_grid1')
+axes_grid1_stub.make_axes_locatable = lambda *a, **k: None
+sys.modules['mpl_toolkits.axes_grid1'] = axes_grid1_stub
 
 cwd = os.path.dirname(__file__)
 for i in range(len(cwd.split("/"))):
