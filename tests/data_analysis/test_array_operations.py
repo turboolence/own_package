@@ -12,6 +12,8 @@ package_abs_path = "/".join(cwd.split("/")[: i + 1]) + "/own_package/"
 sys.path.insert(0, f"{package_abs_path}data_analysis/")
 
 import array_operations as ao
+import numpy as np
+import pytest
 
 
 def test_dot_product():
@@ -23,3 +25,20 @@ def test_dot_product():
 
     assert output[0] == 0
     assert output[1] == 0
+
+
+def test_make_array_periodic():
+
+    arr = np.array([[[1, 2], [3, 4]]])
+
+    tiled = ao.make_array_periodic(arr)
+
+    assert np.array_equal(tiled, np.tile(arr, (3, 3, 3)))
+
+
+def test_make_array_periodic_invalid_dim():
+
+    arr = np.ones((2, 2))
+
+    with pytest.raises(ValueError):
+        ao.make_array_periodic(arr)
