@@ -3,15 +3,21 @@ import scipy.ndimage as ndi
 
 
 def dot_product(A, B):
-    A_dot_B = A[0] * B[0]
-    A_dot_B += A[1] * B[1]
-    A_dot_B += A[2] * B[2]
+    """Return the dot product of ``A`` and ``B`` and the cosine of the angle
+    between them.
 
-    A_mag = A[0] ** 2 + A[1] ** 2 + A[2] ** 2
-    B_mag = B[0] ** 2 + B[1] ** 2 + B[2] ** 2
+    Both ``A`` and ``B`` can be array-like objects. The function first computes
+    the dot product using :func:`numpy.dot` and then calculates the magnitude of
+    each vector via :func:`numpy.linalg.norm`.
+    """
 
-    A_mag = np.sqrt(A_mag)
-    B_mag = np.sqrt(B_mag)
+    A_arr = np.asarray(A)
+    B_arr = np.asarray(B)
+
+    A_dot_B = np.dot(A_arr, B_arr)
+
+    A_mag = np.linalg.norm(A_arr)
+    B_mag = np.linalg.norm(B_arr)
 
     AB_cos = A_dot_B / (A_mag * B_mag)
 
@@ -25,14 +31,9 @@ def gradient(A, *args, **kwargs):
 
 
 def magnitude(A):
-    dim = len(A)
+    """Return the Euclidean norm of ``A`` using ``numpy.linalg.norm``."""
 
-    A_mag = 0.0
-
-    for i in range(dim):
-        A_mag += A[i] ** 2
-
-    return np.sqrt(A_mag)
+    return np.linalg.norm(A)
 
 
 def radial_vector(A_list):

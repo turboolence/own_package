@@ -23,3 +23,11 @@ def test_dot_product():
 
     assert output[0] == 0
     assert output[1] == 0
+
+
+def test_magnitude():
+    A = [1, 2, 2]
+
+    mag = ao.magnitude(A)
+
+    assert mag == 3
