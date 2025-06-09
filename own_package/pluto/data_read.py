@@ -31,8 +31,6 @@ def get_array(N, dir_name, fields, \
     nlinf = pyPLUTO.nlast_info(w_dir=dir_name)
     D = pp.pload(N, w_dir=dir_name)
 
-    # Define scope for eval(), uses global scope by default
-    scope=locals()
 
     out_dict = {}
 
@@ -44,11 +42,11 @@ def get_array(N, dir_name, fields, \
 
     if "coord" in fields:
 
-        coord_dim = ['D.' +xd for xd in x_dim[dim]]
-        dx_dim    = ['D.d'+xd for xd in x_dim[dim]]
+        coord_dim = [xd for xd in x_dim[dim]]
+        dx_dim    = ['d' + xd for xd in x_dim[dim]]
 
-        out_dict['coord'] = [ eval(cd, scope) for cd in coord_dim]
-        out_dict['dx']    = [ eval(dd, scope) for dd in dx_dim   ]
+        out_dict['coord'] = [getattr(D, cd) for cd in coord_dim]
+        out_dict['dx']    = [getattr(D, dd) for dd in dx_dim]
 
         # # x_arr = D.x1
         # # y_arr = D.x2
@@ -74,11 +72,11 @@ def get_array(N, dir_name, fields, \
     
     if "vel" in fields:
         v_dim = ['D.v'+xd for xd in x_dim[dim]]
-        out_dict['vel'] = [eval(vd, scope) for vd in v_dim]
+        out_dict['vel'] = [eval(vd) for vd in v_dim]
 
     if MHD_flag and "B" in fields:
         B_dim = ['D.b'+xd for xd in x_dim[dim]]
-        out_dict['B'] = [eval(bd, scope) for bd in B_dim]
+        out_dict['B'] = [eval(bd) for bd in B_dim]
 
     return out_dict
 
