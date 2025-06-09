@@ -126,28 +126,30 @@ def gaussian_filter(A, sigma=1.0):
 
 
 def make_array_periodic(arr):
-    shape = np.array(arr.shape)
+    """Tile a 3-D array three times along each axis.
 
-    # N_dim = len(shape)
+    Parameters
+    ----------
+    arr : np.ndarray
+        Input array. Must be three dimensional.
 
-    # shape = (shape / 1.1).astype(int)
-    padded_shape = shape * 3
-    padded_arr = np.zeros(padded_shape, dtype=arr.dtype)
-    if len(shape) == 3:
-        for i in range(3):
-            for j in range(3):
-                for k in range(3):
-                    padded_arr[
-                        shape[0] * i : shape[0] * (i + 1),
-                        shape[1] * j : shape[1] * (j + 1),
-                        shape[2] * k : shape[2] * (k + 1),
-                    ] = arr[: shape[0], : shape[1], : shape[2]]
-    else:
+    Returns
+    -------
+    np.ndarray
+        Tiled array with shape ``arr.shape * 3``.
+
+    Raises
+    ------
+    ValueError
+        If ``arr`` is not a 3-D array.
+    """
+
+    if arr.ndim != 3:
         raise ValueError(
-            "array_operations::surround_array(): Only 3D arrays are supported..."
+            "make_array_periodic(): Only 3D arrays are supported"
         )
 
-    return padded_arr
+    return np.tile(arr, (3, 3, 3))
 
 
 def radial_profile(arr, center=None, bins=10):
