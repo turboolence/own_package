@@ -1,20 +1,9 @@
-import sys
-import os
-
-cwd = os.path.dirname(__file__)
-for i in range(len(cwd.split("/"))):
-    if cwd.split("/")[i] == "own_package":
-        break
-
-# Take the path of the package
-package_abs_path = "/".join(cwd.split("/")[: i + 1]) + "/own_package/"
-
-sys.path.insert(0, f"{package_abs_path}data_analysis/")
-
-import array_operations as ao
+import numpy as np
 
 
-def test_dot_product():
+def test_dot_product(add_package_path):
+    add_package_path("data_analysis")
+    import array_operations as ao
 
     A = [0, 0, 1]
     B = [0, 1, 0]
@@ -23,3 +12,15 @@ def test_dot_product():
 
     assert output[0] == 0
     assert output[1] == 0
+
+
+def test_make_array_periodic(add_package_path):
+    add_package_path("data_analysis")
+    import array_operations as ao
+
+    arr = np.arange(8).reshape(2, 2, 2)
+    periodic = ao.make_array_periodic(arr)
+    expected = np.tile(arr, (3, 3, 3))
+
+    assert periodic.shape == (6, 6, 6)
+    assert np.array_equal(periodic, expected)
