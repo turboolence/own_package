@@ -1,5 +1,12 @@
 import sys
 import os
+import types
+
+scipy_mod = types.ModuleType('scipy')
+ndimage_mod = types.ModuleType('scipy.ndimage')
+scipy_mod.ndimage = ndimage_mod
+sys.modules['scipy'] = scipy_mod
+sys.modules['scipy.ndimage'] = ndimage_mod
 
 cwd = os.path.dirname(__file__)
 for i in range(len(cwd.split("/"))):

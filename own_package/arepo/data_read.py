@@ -60,9 +60,9 @@ def extraction_fn(all_data_level_0_hyd, fields, MHD_flag):
     if ("T" in fields) or ("logT" in fields) or ("all" in fields):
         T_arr = (out_dict["prs"] / out_dict["rho"]) * un.KELVIN * un.mu
 
-        if "T" or "all" in fields:
+        if ("T" in fields) or ("all" in fields):
             out_dict["T"] = T_arr
-        if "logT" or "all" in fields:
+        if ("logT" in fields) or ("all" in fields):
             out_dict["logT"] = np.log10(T_arr)
     implemented_field_list += ["T"]
     implemented_field_list += ["logT"]
@@ -70,9 +70,9 @@ def extraction_fn(all_data_level_0_hyd, fields, MHD_flag):
     if ("T_mf" in fields) or ("logT_mf" in fields) or ("all" in fields):
         T_arr = (out_dict["prs_mf"] / out_dict["rho_mf"]) * un.KELVIN * un.mu
 
-        if "T_mf" or "all" in fields:
+        if ("T_mf" in fields) or ("all" in fields):
             out_dict["T_mf"] = T_arr
-        if "logT_mf" or "all" in fields:
+        if ("logT_mf" in fields) or ("all" in fields):
             out_dict["logT_mf"] = np.log10(T_arr)
     implemented_field_list += ["T_mf"]
     implemented_field_list += ["logT_mf"]

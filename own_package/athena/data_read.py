@@ -39,17 +39,17 @@ def get_array_yt(fn, fields=["rho"], MHD_flag=False):
         P_arr = np.array(all_data_level_0_hyd["press"])
         out_dict["prs"] = P_arr
 
-    if "T" or "logT" or "all" in fields:
+    if ("T" in fields) or ("logT" in fields) or ("all" in fields):
         rho_arr = np.array(all_data_level_0_hyd["density"])
         P_arr = np.array(all_data_level_0_hyd["press"])
         T_arr = (P_arr / rho_arr) * un.KELVIN * un.mu
 
-        if "T" or "all" in fields:
+        if ("T" in fields) or ("all" in fields):
             out_dict["T"] = T_arr
-        if "logT" or "all" in fields:
+        if ("logT" in fields) or ("all" in fields):
             out_dict["logT"] = np.log10(T_arr)
 
-    if "vel" or "all" in fields:
+    if ("vel" in fields) or ("all" in fields):
         vel1_arr = np.array(all_data_level_0_hyd["vel1"])
         vel2_arr = np.array(all_data_level_0_hyd["vel2"])
         vel3_arr = np.array(all_data_level_0_hyd["vel3"])
@@ -58,7 +58,7 @@ def get_array_yt(fn, fields=["rho"], MHD_flag=False):
 
         out_dict["vel"] = vel
 
-    if MHD_flag and ("B" or "all" in fields):
+    if MHD_flag and (("B" in fields) or ("all" in fields)):
         Bcc1 = np.array(all_data_level_0_hyd["Bcc1"])
         Bcc2 = np.array(all_data_level_0_hyd["Bcc2"])
         Bcc3 = np.array(all_data_level_0_hyd["Bcc3"])
@@ -92,7 +92,7 @@ def get_array_athena(fn, fields=["rho"], MHD_flag=False, trc_flag=False, trc_N=1
 
     out_dict["time"] = ds["Time"]
 
-    if "coord" or "all" in fields:
+    if ("coord" in fields) or ("all" in fields):
         x_arr = ds["x1v"]
         y_arr = ds["x2v"]
         z_arr = ds["x3v"]
@@ -101,25 +101,25 @@ def get_array_athena(fn, fields=["rho"], MHD_flag=False, trc_flag=False, trc_N=1
 
         out_dict["coord"] = r_arr
 
-    if "rho" or "all" in fields:
+    if ("rho" in fields) or ("all" in fields):
         rho_arr = ds["rho"]
         out_dict["rho"] = rho_arr
 
-    if "prs" or "all" in fields:
+    if ("prs" in fields) or ("all" in fields):
         P_arr = ds["press"]
         out_dict["prs"] = P_arr
 
-    if "T" or "logT" or "all" in fields:
+    if ("T" in fields) or ("logT" in fields) or ("all" in fields):
         rho_arr = ds["rho"]
         P_arr = ds["press"]
         T_arr = (P_arr / rho_arr) * un.KELVIN * un.mu
 
-        if "T" or "all" in fields:
+        if ("T" in fields) or ("all" in fields):
             out_dict["T"] = T_arr
-        if "logT" or "all" in fields:
+        if ("logT" in fields) or ("all" in fields):
             out_dict["logT"] = np.log10(T_arr)
 
-    if "vel" or "all" in fields:
+    if ("vel" in fields) or ("all" in fields):
         vel1_arr = ds["vel1"]
         vel2_arr = ds["vel2"]
         vel3_arr = ds["vel3"]
@@ -128,7 +128,7 @@ def get_array_athena(fn, fields=["rho"], MHD_flag=False, trc_flag=False, trc_N=1
 
         out_dict["vel"] = vel
 
-    if MHD_flag and ("B" or "all" in fields):
+    if MHD_flag and (("B" in fields) or ("all" in fields)):
         Bcc1 = ds["Bcc1"]
         Bcc2 = ds["Bcc2"]
         Bcc3 = ds["Bcc3"]
@@ -137,7 +137,7 @@ def get_array_athena(fn, fields=["rho"], MHD_flag=False, trc_flag=False, trc_N=1
 
         out_dict["B"] = Bcc
 
-    if trc_flag and ("trc" or "all" in fields):
+    if trc_flag and (("trc" in fields) or ("all" in fields)):
         out_dict["trc"] = [ds[f"r{i}"] for i in range(trc_N)]
 
     print(f"data_read.py()::get_array_athena(): Returning fields: {*fields,}")
